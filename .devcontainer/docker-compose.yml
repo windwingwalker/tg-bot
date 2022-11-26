@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  default:
+    build: .
+    volumes:
+      - ../:/workspace:cached
+      - ~/.aws/credentials:/root/.aws/credentials
+      - vscode-extension-nodejs:/root/.vscode-server/extensions
+    command: /bin/sh -c "while sleep 1000; do :; done;"
+    networks:
+      - default
+
+volumes:
+  vscode-extension-nodejs:
+    external: true
+
+networks:
+  default:
+    external: true
+    name: development

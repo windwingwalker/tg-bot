@@ -1,0 +1,11 @@
+{
+	"name": "Tg Bot",
+	
+	"dockerComposeFile": [
+		"docker-compose.yml"
+	],
+
+	"service": "default",
+
+	"workspaceFolder": "/workspace"
+}

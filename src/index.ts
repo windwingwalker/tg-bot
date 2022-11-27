@@ -1,4 +1,5 @@
-import TelegramBot from "node-telegram-bot-api"
+import { Telegraf, Context } from "telegraf";
+import { message } from "telegraf/filters";
 import { TextMessage, DocumentMessage, TgWrapper } from "./models";
 import { getParameterFromSSM, isCsv, isMarkdown } from "./functions";
 import uploadArticle from "./upload-article/index";
@@ -7,37 +8,39 @@ import uploadMoze from "./upload-moze/index";
 const controller = async ()  => {
   try{
     const tgToken: string = await getParameterFromSSM("/tg-bot/default-token");
-    const bot = new TelegramBot(tgToken, {polling: true});
+    const bot: Telegraf = new Telegraf(tgToken);
 
-    bot.onText(/\/health$/, async (msg: TextMessage) => {
-      const tgWrapper = new TgWrapper(bot, msg.chat.id, msg.message_id, 10);
-
-      console.info(msg)
-      await tgWrapper.sendMessage('I am healthy');  
+    bot.hears('/health', async (ctx: Context) => {
+      const tgWrapper = new TgWrapper(bot, ctx["message"]["chat"]["id"], ctx["message"]["message_id"], 10);
+      await tgWrapper.sendMessage('I am healthy');
       tgWrapper.deleteMessages();
-    })
+    });
 
-    bot.on('document', async (msg: DocumentMessage) => {
-      const tgWrapper = new TgWrapper(bot, msg.chat.id, msg.message_id, 60);
+    bot.help((ctx: Context) => ctx.reply('Send me a sticker'));
 
-      console.info(msg)
-      if (msg.document.file_name == "MOZE.csv" && isCsv(msg.document.mime_type)){
-        await uploadMoze(tgWrapper, msg.document.file_id, msg.document.file_name);
-      }else if (isMarkdown(msg["document"]["file_name"], msg.document.mime_type)){
-        await uploadArticle(tgWrapper, msg.document.file_id);
-      }else{
-        raiseFileTypeError(msg.chat.id)
-      }
-    })
+    bot.on(message('document'), async (ctx: Context) => {
+      console.info(ctx["message"]);
+      const tgWrapper = new TgWrapper(bot, ctx["message"]["chat"]["id"], ctx["message"]["message_id"], 60);
 
-  const raiseFileTypeError = (chatId) => {
-    bot.sendMessage(chatId, 'Not supported file type')
-  }
+      const fileId: string = ctx["message"]["document"]["file_id"];
+      const fileName: string = ctx["message"]["document"]["file_name"];
+      const mime: string = ctx["message"]["document"]["mime_type"];
+
+      if (fileName == "MOZE.csv" && isCsv(mime)) await uploadMoze(tgWrapper, fileId, fileName);  
+      else if (isMarkdown(fileName, mime)) await uploadArticle(tgWrapper, fileId);
+    });
+
+    bot.launch();
+    process.once('SIGINT', () => bot.stop('SIGINT'));
+    process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+    // const raiseFileTypeError = (chatId) => {
+    //   bot.sendMessage(chatId, 'Not supported file type')
+    // }
   
   } catch (e) {
     console.error(e);
-  } 
-  
+  }   
 }
 
 controller();

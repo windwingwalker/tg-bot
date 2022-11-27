@@ -4,11 +4,13 @@
     "esModuleInterop": true,
     "outDir": "dist",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "sourceMap": true,
     "skipLibCheck": true,
     "rootDir": "src",
     "allowJs": true,
     "target": "es6"
   },
+  "include": ["**/*.ts", "./**/*.json"]
 }
 

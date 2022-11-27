@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Telegraf, Telegram } from "telegraf";
 
 export interface Chat{
   id: number,
@@ -32,12 +33,12 @@ export interface DocumentMessage extends Message{
 }
 
 export class TgWrapper{
-  bot: any;
+  bot: Telegraf;
   chatId: number;
   messageIdList: number[];
   messageTimeout: number; //In seconds
 
-  constructor(bot: any, chatId: number, firstMessageId: number, messageTimeout: number){
+  constructor(bot: Telegraf, chatId: number, firstMessageId: number, messageTimeout: number){
     this.bot = bot;
     this.chatId = chatId;
     this.messageIdList = [firstMessageId];
@@ -45,16 +46,23 @@ export class TgWrapper{
   }
 
   sendMessage = async (message: string): Promise<void> => {
-    var { message_id } = await this.bot.sendMessage(this.chatId, message);
+    var { message_id } = await this.bot.telegram.sendMessage(this.chatId, message);
     this.messageIdList.push(message_id);
   }
 
   deleteMessages = (): void => {
     setTimeout(() => {
       for (const messageId of this.messageIdList) {
-        this.bot.deleteMessage(this.chatId, messageId)
+        this.bot.telegram.deleteMessage(this.chatId, messageId)
       }
     },this.messageTimeout * 1000);
+  }
+
+  downloadFile = async (fileId: string) => {
+    const link: URL = await this.bot.telegram.getFileLink(fileId);
+    const response: any = await axios.get(link.toString(),{ responseType: 'blob',});
+    const file: any = response.data;
+    return file
   }
 
   // getMessage = async (res: object, field: string, messageIdList: Array<number>) => {
@@ -65,11 +73,6 @@ export class TgWrapper{
   //   messageIdList.push(message_id)
   // }
 
-  downloadFile = async (fileId: string) => {
-    const link: string = await this.bot.getFileLink(fileId);
-    const response: any = await axios.get(link,{ responseType: 'blob',});
-    const file: any = response.data;
-    return file
-  }
+
 
 }

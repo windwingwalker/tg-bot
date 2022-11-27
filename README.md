@@ -14,7 +14,11 @@ Repository release tag = Application version = package.json version= Docker imag
 
 ## Tech stack
 
-- NodeJS, TypeScript, AWS, Docker, K8s, Helm
+- Runtime: NodeJs, TypeScript
+- Hosting: K8s
+- DevOps: Docker
+- Unit test: Mocha, Chai
+- Package manager: Helm, Npm
 
 ## Get started
 

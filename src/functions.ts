@@ -2,12 +2,12 @@ import { SSMClient, GetParameterCommand, GetParameterCommandInput, GetParameterC
 import { CognitoIdentityProviderClient, InitiateAuthCommand, InitiateAuthCommandInput, InitiateAuthCommandOutput } from "@aws-sdk/client-cognito-identity-provider";
 import { S3Client, PutObjectCommand, PutObjectCommandInput, PutObjectCommandOutput } from "@aws-sdk/client-s3";
 
-export const isCsv = (mime: string) => {
-  return mime == "text/csv" || mime == "text/comma-separated-values"
+export const isCsv = (mime: string): boolean => {
+  return mime == "text/csv" || mime == "text/comma-separated-values";
 }
 
-export const isMarkdown = (fileName: string, mime: string) => {
-  return mime == "text/markdown" || fileName.endsWith(".md")
+export const isMarkdown = (fileName: string, mime: string): boolean => {
+  return mime == "text/markdown" || fileName.endsWith(".md");
 }
 
 export const getParameterFromSSM = async (ssmPath: string): Promise<string> => {

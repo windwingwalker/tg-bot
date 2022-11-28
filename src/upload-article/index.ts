@@ -38,7 +38,7 @@ const uploadArticle = async (tgWrapper: TgWrapper, fileId: string): Promise<void
     
   } catch (e) {
     console.error(e);
-    await tgWrapper.sendMessage(`Error: ${e}`);
+    await tgWrapper.sendMessage(e);
   } finally {
     console.info("Function returns");
     tgWrapper.deleteMessages();

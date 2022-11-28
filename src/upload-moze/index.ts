@@ -12,7 +12,7 @@ const uploadMoze = async (tgWrapper: TgWrapper, fileId: string, fileName: string
     await tgWrapper.sendMessage('Successfully uploaded MOZE.csv');  
     
   } catch (e) {
-    await tgWrapper.sendMessage(`Error: ${e}`);
+    await tgWrapper.sendMessage(e);
     console.error(e);
   } finally {
     tgWrapper.deleteMessages();

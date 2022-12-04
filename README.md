@@ -4,13 +4,18 @@
 
 This is a Telegram bot for my personal use. It can:
 
-- Respond health check of the bot.
 - Receive csv files and store them in Amazon S3.
 - Receive markdown files, phrase them into JSON format and store them in Amazon DynamoDB.
 
 ## Misc
 
-Repository release tag = Application version = package.json version= Docker image version != Helm chart version
+There are two type of version: application version and infrastructure version
+- Application version = Repository release tag = package.json version = Docker image version
+- Infrastructure version = Helm chart version
+
+## Architecture
+
+![architecture](tg-bot.drawio.png)
 
 ## Tech stack
 

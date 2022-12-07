@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Telegraf, Telegram } from "telegraf";
+import { Telegraf, Telegram, Markup } from "telegraf";
 
 export interface Chat{
   id: number,
@@ -56,6 +56,10 @@ export class TgWrapper{
         this.bot.telegram.deleteMessage(this.chatId, messageId)
       }
     },this.messageTimeout * 1000);
+  }
+
+  sendInlineKeyboard = async (message: string, inlineKeyboard: any): Promise<void> => {
+    var { message_id } = await this.bot.telegram.sendMessage(this.chatId, message, inlineKeyboard);
   }
 
   downloadFile = async (fileId: string) => {

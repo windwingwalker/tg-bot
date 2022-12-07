@@ -1,6 +1,6 @@
 import { SSMClient, GetParameterCommand, GetParameterCommandInput, GetParameterCommandOutput } from "@aws-sdk/client-ssm";
 import { CognitoIdentityProviderClient, InitiateAuthCommand, InitiateAuthCommandInput, InitiateAuthCommandOutput } from "@aws-sdk/client-cognito-identity-provider";
-import { S3Client, PutObjectCommand, PutObjectCommandInput, PutObjectCommandOutput } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, PutObjectCommandInput, PutObjectCommandOutput, GetObjectCommand , GetObjectCommandInput, GetObjectCommandOutput } from "@aws-sdk/client-s3";
 
 export const isCsv = (mime: string): boolean => {
   return mime == "text/csv" || mime == "text/comma-separated-values";
@@ -40,4 +40,33 @@ export const putObjectToS3 = async (bucketName: string, objectKey: string, objec
   const response: PutObjectCommandOutput = await client.send(command);
 
   if (response["$metadata"]["httpStatusCode"] != 200) throw new Error(`S3 response status code is ${response["$metadata"]["httpStatusCode"]}`);
+}
+
+export const getObjectFromS3 = async (bucketName: string, objectKey: string): Promise<any | Blob | ReadableStream> => {
+  const client: S3Client = new S3Client({ region: "us-east-1" });
+  const params: GetObjectCommandInput = {Bucket: bucketName, Key: objectKey};
+  const command: GetObjectCommand = new GetObjectCommand(params);
+  const response: GetObjectCommandOutput = await client.send(command);
+
+  if (response["$metadata"]["httpStatusCode"] != 200) throw new Error(`S3 response status code is ${response["$metadata"]["httpStatusCode"]}`);
+  return response.Body;
+}
+
+export const getJavaScriptObjectFromS3JSON = async (s3Object: any | Blob | ReadableStream): Promise<any | object | object[]> => {
+  const dataInString = await getStringFromStream(s3Object);
+  const dataInObject: any | object | object[] = await JSON.parse(dataInString);
+  return dataInObject;
+}
+
+export const getS3ObjectFromJavaScriptObject = async (data: any | object): Promise<any | Blob | ReadableStream> => {
+  return Buffer.from(JSON.stringify(data));
+}
+
+export const getStringFromStream = async (stream): Promise<string> => {
+  const chunks = [];
+  return new Promise((resolve, reject) => {
+    stream.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
+    stream.on('error', (err) => reject(err));
+    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+  })
 }

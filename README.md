@@ -1,5 +1,8 @@
 # Telegram Bot
 
+![badge1](https://img.shields.io/github/license/windwingwalker/tg-bot)
+![badge2](https://img.shields.io/github/v/release/windwingwalker/tg-bot?display_name=tag)
+
 ## Background
 
 This is a Telegram bot for my personal use. It can:
@@ -21,11 +24,15 @@ There are two type of version: application version and infrastructure version
 
 ## Tech stack
 
-- Runtime: NodeJs, TypeScript
-- Hosting: K8s
+- Runtime:
+  - Language: TypeScript
+  - Framework: NodeJs
+- Hosting: Local Kubernetes (K8s) cluster
 - DevOps: Docker
 - Unit test: Mocha, Chai
-- Package manager: Helm, Npm
+- Package managers:
+  - For Kubernetes: Helm
+  - For JavaScript: npm
 
 ## Get started
 

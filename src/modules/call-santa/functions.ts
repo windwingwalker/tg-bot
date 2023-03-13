@@ -1,5 +1,6 @@
-import { getJavaScriptObjectFromS3JSON, getObjectFromS3, getParameterFromSSM, getS3ObjectFromJavaScriptObject, getStringFromStream, putObjectToS3 } from "../functions";
-import { TgWrapper } from "../models";
+import { getJavaScriptObjectFromS3JSON, getS3ObjectFromJavaScriptObject, getStringFromStream } from "../../functions/index";
+import { getObjectFromS3, getParameterFromSSM, putObjectToS3} from "../../functions/io"
+import { TgWrapper } from "../../models";
 import { Attendee } from "./models";
 
 export const getAttendeeListFromS3 = async (): Promise<Attendee[]> => {

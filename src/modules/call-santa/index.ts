@@ -1,6 +1,5 @@
-import { TgWrapper } from "../models";
+import { TgWrapper } from "../../models";
 import { Composer, Markup, Scenes, session, Telegraf } from "telegraf";
-import { getObjectFromS3, getParameterFromSSM, getStringFromStream } from "../functions";
 import { description, steps,  inlineMessageKeyboard, Attendee} from "./models";
 import { addAttendeeToList, addSantaToAttendees, displayAttendeeList, distributeResultToPrivateChat, getAttendeeListFromS3, putAttendeeListToS3 as putRegisterationData } from "./functions";
 

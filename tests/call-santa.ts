@@ -1,4 +1,4 @@
-import { addSantaToAttendees, santaDistributionIsValid, getUniqueRandomNumberList, displayAttendeeList } from "../src/call-santa/functions";
+import { addSantaToAttendees, santaDistributionIsValid, getUniqueRandomNumberList, displayAttendeeList } from "../src/modules/call-santa/functions";
 import chai from 'chai';
 
 describe('call-santa/functions.ts', () => {

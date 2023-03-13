@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Telegraf, Telegram, Markup } from "telegraf";
 
 export interface Chat{
@@ -64,9 +64,11 @@ export class TgWrapper{
 
   downloadFile = async (fileId: string) => {
     const link: URL = await this.bot.telegram.getFileLink(fileId);
-    const response: any = await axios.get(link.toString(),{ responseType: 'blob',});
-    const file: any = response.data;
-    return file
+    const response: AxiosResponse = await axios.get(link.toString(),{ responseType: 'blob',});
+    const file: any = response["data"];
+
+    if (!file) throw new Error("Fail to download file from TG official server");
+    else return file
   }
 
   // getMessage = async (res: object, field: string, messageIdList: Array<number>) => {

@@ -1,10 +1,11 @@
 import { Telegraf, Context } from "telegraf";
 import { message } from "telegraf/filters";
 import { TextMessage, DocumentMessage, TgWrapper } from "./models";
-import { getParameterFromSSM, isCsv, isMarkdown } from "./functions";
-import uploadArticle from "./upload-article/index";
-import uploadMoze from "./upload-moze/index";
-import callSanta from "./call-santa/index";
+import { isCsv, isMarkdown } from "./functions";
+import { getParameterFromSSM} from "./functions/io";
+import uploadArticle from "./modules/upload-article";
+import uploadMoze from "./modules/upload-moze";
+import callSanta from "./modules/call-santa";
 
 const controller = async ()  => {
   try{

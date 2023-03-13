@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "test": "mocha --require ts-node/register test/**/*.ts --exit",
+    "test": "mocha --require ts-node/register tests/**/*.ts --exit",
     "build": "tsc",
     "prod": "ts-node src/index.ts"
   },

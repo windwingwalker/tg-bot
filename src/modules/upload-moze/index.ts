@@ -1,5 +1,5 @@
-import { getParameterFromSSM, putObjectToS3 } from "../functions";
-import { TgWrapper } from "../models";
+import { getParameterFromSSM, putObjectToS3 } from "../../functions/io";
+import { TgWrapper } from "../../models";
 
 const uploadMoze = async (tgWrapper: TgWrapper, fileId: string, fileName: string): Promise<void> => {
   try{
@@ -14,9 +14,11 @@ const uploadMoze = async (tgWrapper: TgWrapper, fileId: string, fileName: string
   } catch (e) {
     await tgWrapper.sendMessage(e);
     console.error(e);
+
   } finally {
     tgWrapper.deleteMessages();
     console.info("Function returns");
+    
   }
 }
 

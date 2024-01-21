@@ -1,7 +1,7 @@
 # Telegram Bot
 
-![badge1](https://img.shields.io/github/license/windwingwalker/tg-bot)
-![badge2](https://img.shields.io/github/v/release/windwingwalker/tg-bot?display_name=tag)
+![license-badge](https://img.shields.io/github/license/windwingwalker/tg-bot)
+![release-badge](https://img.shields.io/github/v/release/windwingwalker/tg-bot?display_name=tag)
 
 ## Background
 
@@ -20,29 +20,39 @@ There are two type of version: application version and infrastructure version
 
 ## Architecture
 
-![architecture](architecture.png)
+![architecture-diagram](architecture.png)
 
 ## Tech stack
 
 - Runtime:
-  - Language: TypeScript
-  - Framework: NodeJs
-- Hosting: Local Kubernetes (K8s) cluster
-- DevOps: Docker
-- Unit test: Mocha, Chai
+  - Language: ![typescript-badge](https://img.shields.io/badge/-TypeScript-grey?style=flat&logo=typescript)
+  - Framework: ![nodejs-badge](https://img.shields.io/badge/-Node.js-grey?style=flat&logo=nodedotjs)
+- Hosting: Local ![k8s-badge](https://img.shields.io/badge/-Kubernetes-grey?style=flat&logo=kubernetes) cluster
+- DevOps: ![docker-badge](https://img.shields.io/badge/-Docker-grey?style=flat&logo=docker)
+- Unit test:
+  - ![mocha-badge](https://img.shields.io/badge/-Mocha-grey?style=flat&logo=mocha)
+  - ![chai-badge](https://img.shields.io/badge/-Chai-grey?style=flat&logo=chai)
 - Package managers:
-  - For Kubernetes: Helm
-  - For JavaScript: npm
+  - For Kubernetes: ![helm-badge](https://img.shields.io/badge/-Helm-grey?style=flat&logo=helm)
+  - For JavaScript: ![npm-badge](https://img.shields.io/badge/-Npm-grey?style=flat&logo=npm)
+- Process manager (optinal): ![pm2-badge](https://img.shields.io/badge/-PM2-grey?style=flat&logo=pm2)
 
 ## Get started
 
 If you want to:
 
 - Run program in development mode: `npm run dev`
-- (Optional) Compile TS code into JS and store JS in `dist/`: `npm run build`
+- (Optional) Compile TS code into JS and store *.js in `dist/`: `npm run build`
 - Run program in production mode: `npm run prod`
+  - If you execute`npm run prod` directly through terminal, the program will be tighted to the terminal session, i.e. if you close your terminal, the program will stop
+  - To solve this, you need a process manager like PM2, do the following:
+    - `npm install pm2 -g`
+    - `pm2 start npm --name "tg-bot" -- run prod`, such that "tg-bot" is the name specified in `package.json`
 
 ## References
+
+- https://simpleicons.org/
+- https://shields.io/
 
 ### Beginner Guide
 

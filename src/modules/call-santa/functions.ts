@@ -48,7 +48,6 @@ export const distributeResultToPrivateChat = async (tgWrapper: TgWrapper, attend
 }
 
 export const addSantaToAttendees = (attendeeList: Attendee[]): Attendee[] => {
-  console.log("a1")
   while (!santaDistributionIsValid(attendeeList)) {
     var havenSantaList: number[] = getUniqueRandomNumberList(attendeeList.length);    
     for (var i = 0; i < attendeeList.length; i++){
@@ -59,9 +58,7 @@ export const addSantaToAttendees = (attendeeList: Attendee[]): Attendee[] => {
     for (var i = 0; i < attendeeList.length; i++){
       attendeeList[i]["hellPresenTarget"] = attendeeList[hellSantaList[i]]["name"]
     }
-    console.log("ppp")
   }
-  console.log("a2")
   return attendeeList;
 }
 

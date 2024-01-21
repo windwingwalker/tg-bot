@@ -14,6 +14,12 @@ const controller = async ()  => {
 
     bot.help((ctx: Context) => ctx.reply('Help menu is coming soon'));
 
+    bot.command('hello', async (ctx: Context) => {
+      const tgWrapper = new TgWrapper(bot, ctx["message"]["chat"]["id"], ctx["message"]["message_id"], 10);
+      await tgWrapper.sendMessage('Hello');
+      tgWrapper.deleteMessages();
+    });
+
     bot.command('health', async (ctx: Context) => {
       const tgWrapper = new TgWrapper(bot, ctx["message"]["chat"]["id"], ctx["message"]["message_id"], 10);
       await tgWrapper.sendMessage('I am healthy');

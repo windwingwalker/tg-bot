@@ -39,4 +39,3 @@ response.json
 .terraform.lock.hcl
 **/node_modules/
 **/dist/
-package-lock.json
